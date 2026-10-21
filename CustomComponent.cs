@@ -33,5 +33,6 @@ public class MyHotComponent : HotComponentBase
         }
         DA.SetData(0, new GH_Number(a + b));
         //Hello
+        // one more hello
     }
 }
