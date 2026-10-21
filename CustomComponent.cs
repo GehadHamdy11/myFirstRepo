@@ -35,5 +35,6 @@ public class MyHotComponent : HotComponentBase
         //Hello
         // one more hello
         // two more hellos
+        // 3 more hellos 
     }
 }
