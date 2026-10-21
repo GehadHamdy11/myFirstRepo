@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <RootNamespace>$(SolutionName)</RootNamespace>
+    <Configurations>Debug;Develop;Release</Configurations>
+	<!-- Change the extension so that we can watch it easily -->
+	<TargetExt>.ghc</TargetExt>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Develop'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grasshopper" Version="6.35.21222.17001">
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(Configuration)'!='Develop'">
+    <Reference Include="HotComponent">
+      <HintPath>C:\Users\ghelsaeed\AppData\Roaming\McNeel\Rhinoceros\packages\8.0\HotLoader\0.1.2\HotLoader.gha</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)'=='Develop'">
+    <ProjectReference Include="..\Plugin\HotLoader.csproj">
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+	<!-- Copy to output directory  -->
+	<Target Name="SetOutputDir" BeforeTargets="BeforeBuild">
+		<PropertyGroup>
+			<OutDir>$(ProjectDir)\bin\$([System.DateTime]::Now.ToFileTimeUtc())\</OutDir>
+		</PropertyGroup>
+		<Message Text="Output directory set to: $(OutDir)" Importance="high" />
+	</Target>
+</Project>
